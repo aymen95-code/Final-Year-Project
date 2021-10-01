@@ -1,0 +1,106 @@
+<!-- NAVBAR -->
+<nav class="{{ 'nav indigo darken-3' if g.is_authenticated else 'anonymousNav' }}" id="nav-join">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="{{ url_for('main.index') }}" class="brand-logo">Mood</a>
+            {% if g.is_authenticated %}
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            {% endif %}
+            <ul class="right hide-on-med-and-down">
+
+                {% if g.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('main.index') }}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('pubs.all_pubs') }}">
+                        Discussions
+                    </a>
+                </li>
+                {% if g.current_user.role == 'teacher' %}
+                <li>
+                    <a href="{{ url_for('room.videoroom') }}">
+                        Conferencing
+                    </a>
+                </li>
+                {% elif g.current_user.role == 'admin' %}
+                <li>
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        Dashboard
+                    </a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="{{ url_for('account.user_account', username=g.current_user.username) }}"
+                       class="profile-holder">
+                        <img class="mr-2"
+                             src="{{ url_for('static', filename='profile_pics/' + g.current_user.profile_file) }}"
+                             width="30px">
+                        {{ g.current_user.username }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('auth.logout') }}" class="indigo waves-effect waves-light btn">
+                        Logout
+                    </a>
+                </li>
+
+                {% else %}
+                <li>
+                    <a href="{{ url_for('auth.login') }}" class="teal darken-3 waves-effect waves-light btn">
+                        Login
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('auth.register') }}" class="indigo darken-3 waves-effect waves-light btn">
+                        Registre
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if g.is_authenticated %}
+<ul class="sidenav" id="mobile-demo">
+    <li>
+        <a href="{{ url_for('main.index') }}">
+            Home
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('pubs.all_pubs') }}">
+            Discussions
+        </a>
+    </li>
+
+    {% if g.current_user.role == 'teacher' %}
+    <li>
+        <a href="{{ url_for('pubs.all_pubs') }}">
+            Conferencing
+        </a>
+    </li>
+    {% elif g.current_user.role == 'admin' %}
+    <li>
+        <a href="{{ url_for('admin.dashboard') }}">
+            Dashboard
+        </a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{{ url_for('account.user_account', username=g.current_user.username) }}" class="profile-holder">
+            <img class="mr-2" src="{{ url_for('static', filename='profile_pics/' + g.current_user.profile_file) }}"
+                 width="30px">
+            {{ g.current_user.username }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('auth.logout') }}" class="red darken-3 waves-effect waves-light btn">
+            Logout
+        </a>
+    </li>
+</ul>
+{% endif %}

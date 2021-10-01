@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="row dashboard">
+    <!-- Side Navigation -->
+    {% include 'admin/partials/sidenav.html' %}
+
+    <!-- Content -->
+    <div class="dash-content col s12 m12 l10 offset-l2">
+        <div class="container">
+            <h4 style="margin-top:40px">{{ title }}</h4>
+            {% block dashboardContent %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "admin/layouts/dashboard.html" %}
+{% block dashboardContent %}
+<h6>List of registered students</h6>
+<div class="table-container" style="margin-top: 30px">
+    <table class="highlight centered responsive-table"
+    ">
+    <thead>
+    <tr>
+        <th>#id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Last seen</th>
+        <th>Profile File</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for student in list_of_students %}
+    <tr>
+        <td>{{ student.id }}</td>
+        <td>{{ student.username }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.role }}</td>
+        <td>{{ student.last_online.strftime("%I:%M %p - %-d %B %Y") }}</td>
+        <td>{{ student.profile_file }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% endblock %}

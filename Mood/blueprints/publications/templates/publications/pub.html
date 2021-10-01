@@ -1,0 +1,34 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container">
+
+    <!-- Message Flashing -->
+    {% include './partials/flash.html' %}
+    <p>{{ pub.author.username }}</p>
+    <div class="make-pretty">
+        {{ pub.body }}
+    </div>
+    {% if g.current_user == pub.author %}
+    <a href="{{ url_for('pubs.update_pub', pub_id=pub.id) }}">
+        <button class="button is-info">Edit Pub</button>
+    </a>
+    <button class="del-btn button is-danger">Delete Pub</button>
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content is-white">
+            <p class="">
+                Are you sure you want to delete your pub??
+            </p>
+            <hr>
+            <button class="ex-btn button is-info">No, Exit</button>
+            <form action="{{ url_for('pubs.delete_pub', pub_id=pub.id) }}" method="POST">
+                <input type="submit" value="Yes, delete" class="button is-danger">
+            </form>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    {% endif %}
+</div>
+
+{{ mde.js }}
+{% endblock %}

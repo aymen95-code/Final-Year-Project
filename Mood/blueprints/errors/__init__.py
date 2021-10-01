@@ -1,0 +1,1 @@
+from Mood.blueprints.errors.routes import errors

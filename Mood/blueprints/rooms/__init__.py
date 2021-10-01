@@ -1,0 +1,1 @@
+from Mood.blueprints.rooms.routes import room

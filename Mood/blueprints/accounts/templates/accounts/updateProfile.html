@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>{{ title }} Page</h1>
+    <!-- Message Flashing -->
+    {% include './partials/flash.html' %}
+
+    <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+        {{ form.hidden_tag() }}
+        <!-- Username Field -->
+        <div class="field mb-3">
+            {{ form.username.label(class="label") }}
+            {% if form.username.errors %}
+            {{ form.username(class="input is-danger") }}
+            {% for err in form.username.errors %}
+            <div class="invalid-feedback">
+                <span class="form-text text-danger">
+                    {{ err }}
+                </span>
+            </div>
+            {% endfor %}
+            {% else %}
+            {{ form.username(class="input is-primary") }}
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="field mb-3">
+            {{ form.email.label(class="label") }}
+            {% if form.email.errors %}
+            {{ form.email(class="input is-danger") }}
+            {% for err in form.email.errors %}
+            <div class="invalid-feedback">
+                <span class="form-text">
+                    {{ err }}
+                </span>
+            </div>
+            {% endfor %}
+            {% else %}
+            {{ form.email(class="input is-primary") }}
+            {% endif %}
+        </div>
+
+        <div class="file-field input-field">
+            <div class="btn indigo darken-3">
+                <span>{{ form.profile_pic.label(style="color:white;") }}</span>
+                {{ form.profile_pic(class="file-input") }}
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+            {% if form.profile_pic.errors %}
+            {% for error in form.picture.errors %}
+            <span class="red-text">{{ error }}</span></br>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+        <div class="field buttons mb-3">
+            {{ form.submit(class="btn indigo darken-3") }}
+            <input type="reset" value="reset" class="btn red darken-3">
+        </div>
+    </form>
+
+    <small>
+        <a href="{{ url_for('main.index') }}">Back to the home page</a>
+    </small>
+</div>
+
+{% endblock %}

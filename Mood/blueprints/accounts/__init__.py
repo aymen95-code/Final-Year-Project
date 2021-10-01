@@ -1,0 +1,1 @@
+from Mood.blueprints.accounts.routes import account

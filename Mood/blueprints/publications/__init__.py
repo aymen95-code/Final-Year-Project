@@ -1,0 +1,1 @@
+from Mood.blueprints.publications.routes import pubs

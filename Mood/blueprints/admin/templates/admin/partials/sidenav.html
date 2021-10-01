@@ -1,0 +1,41 @@
+<div class="side-nav col l2 indigo darken-3 z-depth-2 hide-on-med-and-down">
+    <!-- Title -->
+    <h5>
+        <a href="{{ url_for('main.index') }}">
+            <i class="material-icons">
+                arrow_back
+            </i>
+        </a>
+        <span>
+            Dashboard
+        </span>
+    </h5>
+
+    <!-- Navigation Menu -->
+    <ul class="navigation-menu">
+        <a href="{{ '#' if title == 'dashboard' else url_for('admin.dashboard') }}">
+            <li class="{{ 'active' if title == 'dashboard' }}">General Stats</li>
+        </a>
+
+        <a href="{{ '#' if title == 'students management' else url_for('admin.students') }}">
+            <li class="{{ 'active' if title == 'students management' }}">Students Management</li>
+        </a>
+
+        <a href="{{ '#' if title == 'teachers management' else url_for('admin.teachers') }}">
+            <li class="{{ 'active' if title == 'teachers management' }}">Teachers Management</li>
+        </a>
+
+        <li style="padding:0;">
+            <div class="divider"></div>
+        </li>
+
+        <a href="{{ '#' if title == 'settings' else url_for('admin.settings') }}">
+            <li class="{{ 'active' if title == 'settings' }}">Settings</li>
+        </a>
+    </ul>
+
+    <!-- Logout btn -->
+    <div class="logout">
+        <a href="{{ url_for('auth.logout') }}" class="red darken-3 waves-effect waves-light btn">Logout</a>
+    </div>
+</div>

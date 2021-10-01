@@ -1,0 +1,35 @@
+{% extends "admin/layouts/dashboard.html" %}
+{% block dashboardContent %}
+<h6>Below are cards containing a primitive stats (to be enhanced later on)</h6>
+<div class="row" style="margin-top: 40px">
+    <div class="col s12 m6">
+        <div class="card teal darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">{{ num_of_users }} Users</span>
+                <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m6">
+        <div class="card red darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">{{ num_of_pubs }} Discussions</span>
+                <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m6">
+        <div class="card yellow darken-3">
+            <div class="card-content white-text">
+                <span class="card-title">{{ num_of_classrooms }} Classrooms</span>
+                <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

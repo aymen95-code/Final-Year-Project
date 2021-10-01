@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>{{ title }} Page</h1>
+    <!-- Message Flashing -->
+    {% include './partials/flash.html' %}
+    <form id="pubsForm" action="{{ url_for('pubs.update_pub', pub_id=pub.id) }}" method="POST" autocomplete="off">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="input-field col s12">
+                {% if form.body.errors %}
+                {{ form.body(id="textarea1", class="materialize-textarea") }}
+                {% for err in form.body.errors %}
+                <div class="invalid-feedback">
+                                        <span class="red-text">
+                                            {{ err }}
+                                        </span>
+                </div>
+                {% endfor %}
+                {% else %}
+                {{ form.body(id="textarea1", class="materialize-textarea") }}
+                {% endif %}
+                {{ form.body.label(for="textarea1") }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.submit(class="indigo darken-3 waves-effect waves-light btn") }}
+                <input type="reset" value="reset" class="red darken-3 waves-effect waves-light btn">
+            </div>
+        </div>
+    </form>
+
+    {{mde.js}}
+
+    <small>
+        <a href="{{ url_for('pubs.get_pub', pub_id=pub.id) }}">Back to the pub</a>
+    </small>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+    <video autoplay></video>
+    <button id="startStream">Start Streaming</button>
+    <script>
+        'use strict';
+
+        const startBtn = document.querySelector('#startStream');
+
+        const constraints = window.constraints = {
+            audio: false,
+            video: true
+        };
+
+        function handleSuccess(stream) {
+            let video = document.querySelector('video');
+            /* Get the video tracks: array[]
+                const videoTracks = stream.getVideoTracks();
+            */
+            video.srcObject = stream;
+            console.log('Got MediaStream:', stream);
+        }
+
+        function handleError(err) {
+            switch (err.name) {
+                case 'ConstraintNotSatisfiedError':
+                    const videoConstraints = constraints.video
+                    errMsg(`The resolution ${videoConstraints.width.exact}x${videoConstraints.width.exact}
+                px isn't supported by your device`);
+                    break;
+                case 'PermissionDeniedError':
+                    errMsg('Permissions have not been granted to use your camera and ' +
+                        'microphone, you need to allow the page access to your devices in ' +
+                        'order for the demo to work.');
+                    break
+                default:
+                    errorMsg(`getUserMedia error: ${err.name}`, err);
+            }
+        }
+
+        function errMsg(msg, err) {
+            alert(msg);
+            if (typeof error !== 'undefined') {
+                console.error(error);
+            }
+        }
+
+        async function init(e) {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                handleSuccess(stream);
+                e.target.disabled = true;
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        startBtn.addEventListener('click', e => init(e));
+    </script>
+</section>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container">
+
+    <!-- Message Flashing -->
+    {% include './partials/flash.html' %}
+
+    <!-- Publishing Form -->
+    <form id="pubsForm" action="{{ url_for('pubs.all_pubs') }}" method="POST" autocomplete="off">
+        {{ form.hidden_tag() }}
+        <h5>Create a New Discussion</h5>
+        <div class="row">
+            <div class="input-field col s12">
+                {% if form.body.errors %}
+                {{ form.body(id="textarea1", class="materialize-textarea", rows=10) }}
+                {% for err in form.body.errors %}
+                <div class="invalid-feedback">
+                            <span class="red-text">
+                                {{ err }}
+                            </span>
+                </div>
+                {% endfor %}
+                {% else %}
+                {{ form.body(id="textarea1", class="materialize-textarea", rows=10) }}
+                {% endif %}
+                {{ form.body.label(for="textarea1") }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.submit(class="indigo darken-3 waves-effect waves-light btn") }}
+                <input type="reset" value="reset" class="red darken-3 waves-effect waves-light btn">
+            </div>
+        </div>
+    </form>
+
+    <!-- News Feed -->
+    <div class="news-feed">
+        <h5>Recent Discussions</h5>
+        {% if pubs %}
+        {% for pub in pubs %}
+        <div class="row">
+            <div
+                    class="z-depth-1 {{ 'announcement indigo text-white' if pub.author.role == 'admin' else 'pub' }} card col s12">
+                <div class="pub-author">
+                    <img src="{{ url_for('static', filename='profile_pics/' + pub.author.profile_file) }}" width="100%"
+                         alt="">
+                    <div class="author-info">
+                        <strong>
+                            <a href="{{ url_for('account.user_account', username=pub.author.username) }}">
+                                @{{ pub.author.username }}
+                            </a>
+                        </strong>
+                        <small>{{ pub.author.email }}</small>
+                        <date>{{ pub.date_posted.strftime("%-d %B %Y %I:%M %p ") }}</date>
+                    </div>
+                </div>
+                <p class="pub-body">{{ pub.body }}</p>
+                <!-- Reactions -->
+                <div class="reactions">
+                    <!-- Likes -->
+                    {% if not g.current_user.has_liked_post(pub) %}
+                    <a href="{{
+                                    url_for('pubs.pub_reaction', pub_id=pub.id, action='like')
+                                }}"
+                       class="flex-center">
+                                        <span class="material-icons indigo-text">
+                                            favorite_border
+                                        </span>
+                    </a>
+                    {% else %}
+                    <a href="{{
+                                    url_for('pubs.pub_reaction', pub_id=pub.id, action='dislike')
+                                }}"
+                       class="flex-center">
+                                        <span class="material-icons indigo-text">
+                                            favorite
+                                        </span>
+                    </a>
+                    {% endif %}
+                    <span class="like-count indigo-text">{{ pub.likes.count() }}</span>
+                    <!-- Comment Reactions -->
+                    <a class="comments flex-center"
+                       href="{{
+                                    url_for('pubs.get_pub', pub_id=pub.id)
+                                }}">
+                                <span class="material-icons indigo-text">
+                                    comment
+                                </span>
+                        <span class="comment-count indigo-text">{{ pub.comments.count() }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>There's no discussions at the moment</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

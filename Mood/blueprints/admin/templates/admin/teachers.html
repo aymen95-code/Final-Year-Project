@@ -1,0 +1,130 @@
+{% extends "admin/layouts/dashboard.html" %}
+{% block dashboardContent %}
+<div class="add-prof">
+    <form style="margin-bottom: 60px" id="pubsForm" action="{{ url_for('admin.teachers') }}" method="POST">
+        <h6 style="margin-bottom: 20px">Add a new professor</h6>
+        {{ form.hidden_tag() }}
+        <!-- Username Field -->
+        <div class="row">
+            <div class="input-field col s12">
+                {% if form.username.errors %}
+                {{ form.username(class="validate") }}
+                {% for err in form.username.errors %}
+                <div class="red-text">
+                                            <span class="form-text">
+                                                {{ err }}
+                                            </span>
+                </div>
+                {% endfor %}
+                {% else %}
+                {{ form.username(class="validate") }}
+                {% endif %}
+                {{ form.username.label() }}
+            </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="row">
+            <div class="input-field col s12">
+                {% if form.email.errors %}
+                {{ form.email(class="validate") }}
+                {% for err in form.email.errors %}
+                <div class="red-text">
+                                            <span class="form-text">
+                                                {{ err }}
+                                            </span>
+                </div>
+                {% endfor %}
+                {% else %}
+                {{ form.email(class="validate") }}
+                {% endif %}
+                {{ form.email.label() }}
+            </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="row">
+            <div class="input-field col s12">
+                {% if form.password.errors %}
+                {{ form.password(class="validate") }}
+                {% for err in form.password.errors %}
+                <div class="red-text">
+                                            <span class="form-text">
+                                                {{ err }}
+                                            </span>
+                </div>
+                {% endfor %}
+                {% else %}
+                {{ form.password(class="validate") }}
+                {% endif %}
+                {{ form.password.label() }}
+            </div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="row">
+            <div class="input-field col s12">
+                {% if form.confirm_password.errors %}
+                {{ form.confirm_password(class="validate") }}
+                {% for err in form.confirm_password.errors %}
+                <div class="red-text">
+                                            <span class="form-text">
+                                                {{ err }}
+                                            </span>
+                </div>
+                {% endfor %}
+                {% else %}
+                {{ form.confirm_password(class="validate") }}
+                {% endif %}
+                {{ form.confirm_password.label() }}
+            </div>
+        </div>
+
+
+        <div class="form-buttons">
+            {{ form.submit(class="indigo darken-3 waves-effect waves-light btn") }}
+            <input type="reset" value="reset" class="red darken-3 waves-effect waves-light btn">
+        </div>
+    </form>
+</div>
+<h6>List of registered professors</h6>
+<div class="table-container" style="margin-top: 30px">
+    <table class="highlight centered responsive-table"
+    ">
+    <thead>
+    <tr>
+        <th>#id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Last seen</th>
+        <th>Profile File</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% if list_of_teachers %}
+    {% for prof in list_of_teachers %}
+    <tr>
+        <td>{{ prof.id }}</td>
+        <td>{{ prof.username }}</td>
+        <td>{{ prof.email }}</td>
+        <td>{{ prof.role }}</td>
+        <td>{{ prof.last_online.strftime("%I:%M %p - %-d %B %Y") }}</td>
+        <td>{{ prof.profile_file }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+    </tr>
+    {% endif %}
+    </tbody>
+    </table>
+</div>
+{% endblock %}

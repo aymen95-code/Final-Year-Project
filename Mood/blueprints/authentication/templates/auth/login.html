@@ -1,0 +1,74 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container auth">
+    <!-- Message Flashing -->
+    {% include './partials/flash.html' %}
+
+    <div class="card white-text">
+        <div class="card-action teal darken-3">
+            <h3>{{ title }}</h3>
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <form action="{{ url_for('auth.login') }}" method="POST" class="s12" autocomplete="off" autofill="off">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Email Field -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {% if form.email.errors %}
+                            {{ form.email(class="validate") }}
+                            {% for err in form.email.errors %}
+                            <div class="red-text">
+                                <span class="form-text">
+                                    {{ err }}
+                                </span>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            {{ form.email(class="validate") }}
+                            {% endif %}
+                            {{ form.email.label() }}
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {% if form.password.errors %}
+                            {{ form.password(class="validate") }}
+                            {% for err in form.password.errors %}
+                            <div class="red-text">
+                                <span class="form-text">
+                                    {{ err }}
+                                </span>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            {{ form.password(class="validate") }}
+                            {% endif %}
+                            {{ form.password.label() }}
+                        </div>
+                    </div>
+
+                    <!-- Remelber -->
+                    <div class="row">
+                        <div class="col s12">
+                            <label>
+                                {{ form.remember(class="filled-in", checked="checked") }}
+                                <span>Remember Me?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        {{ form.submit(class="indigo darken-3 waves-effect waves-light btn") }}
+                        <input type="reset" value="reset" class="red darken-3 waves-effect waves-light btn">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
