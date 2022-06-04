@@ -19,7 +19,7 @@
                     <p class="mt-4 mb-1"><strong>Email:</strong> {{ user.email }}</p>
                     <p><strong>Role:</strong> {{ user.role }}</p>
                     <p class="mt-4 mb-1"><strong>Last online on:</strong></p>
-                    <time>{{ user.last_online.strftime("%I:%M %p - %-d %B %Y") }}</time>
+                        <date>{{ user.date_joined.strftime("%d %B %Y %H:%M %p ") }}</date>
                 </div>
                 <div class="card-action">
                     {% if g.current_user == user %}
@@ -46,7 +46,7 @@
                                 </a>
                             </strong>
                             <small>{{ pub.author.email }}</small>
-                            <date>{{ pub.date_posted.strftime("%-d %B %Y %I:%M %p ") }}</date>
+                            <date>{{ pub.date_posted.strftime("%d %B %Y %I:%M %p ") }}</date>
                         </div>
                     </div>
                     <p class="pub-body">{{ pub.body }}</p>
